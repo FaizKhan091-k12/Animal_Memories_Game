@@ -14,11 +14,21 @@ public class LevelBehaviour : MonoBehaviour
     public GameObject[] allLevels;
     public GameObject[] levelStartButton;
     public GameObject backButton;
-   
+
+    public GameObject[] InGameWindows;
 
     void Start()
     {
         UpdateButtons();
+        TurnOffInGameWindows();
+    }
+
+    private void TurnOffInGameWindows()
+    {
+        for (int i = 0; i < InGameWindows.Length; i++)
+        {
+            InGameWindows[i].SetActive(false);
+        }
     }
 
     public void UnlockNextLevel(int currentLevel)
@@ -128,6 +138,63 @@ public class LevelBehaviour : MonoBehaviour
         UpdateButtons();
     }
 
+
+    public void LevelToActivate(int levelIndex)
+    {
+        TurnOffInGameWindows();
+        uiPanels[0].SetActive(false);
+        uiPanels[1].SetActive(false);
+        gamePanel.SetActive(true);
+        
+        for (int i = 0; i < allLevels.Length; i++)
+        {
+            allLevels[i].SetActive(false);
+            allLevels[levelIndex].SetActive(true);
+            allLevels[levelIndex].transform.GetChild(0).gameObject.SetActive(true);
+            backButton.transform.localScale = Vector3.zero;
+            backButton.transform.DOScale(Vector3.one, .12f).SetEase(Ease.OutBack);
+
+            for (int j = 0; j < levelStartButton.Length; j++)
+            {
+                levelStartButton[j].transform.localScale = Vector3.one;
+                
+            }
+        }
+  
+    }
+
+    public void StartCurrentLevel(int levelIndex)
+    {
+        
+        if (levelIndex == 0)
+        {
+            levelStartButton[levelIndex].transform.localScale = Vector3.zero;
+            levelStartButton[levelIndex].transform.DOScale(Vector3.one, .12f).SetEase(Ease.OutBack);
+            Invoke(nameof(LevelOneActivities), .2f);
+        }
+
+        if (levelIndex == 1)
+        {
+            levelStartButton[levelIndex].transform.localScale = Vector3.zero;
+            levelStartButton[levelIndex].transform.DOScale(Vector3.one, .12f).SetEase(Ease.OutBack);
+            Invoke(nameof(LevelTwoActivities), .2f);
+        }
+       
+    }
+    
+    void LevelOneActivities()
+    {
+        levelStartButton[0].transform.localScale = Vector3.zero;
+        levelStartButton[0].transform.parent.gameObject.SetActive(false);
+        InGameWindows[0].SetActive(true);
+  
+    }
+    void LevelTwoActivities()
+    {
+        levelStartButton[1].transform.localScale = Vector3.zero;
+        levelStartButton[1].transform.parent.gameObject.SetActive(false);
+        InGameWindows[1].SetActive(true);
+    }
     public void BackButtonClicked()
     {
         backButton.transform.localScale = Vector3.one;
@@ -149,54 +216,8 @@ public class LevelBehaviour : MonoBehaviour
            
         }
     }
-    public void LevelToActivate(int levelIndex)
-    {
-        uiPanels[0].SetActive(false);
-        uiPanels[1].SetActive(false);
-        gamePanel.SetActive(true);
-        for (int i = 0; i < allLevels.Length; i++)
-        {
-            allLevels[i].SetActive(false);
-            allLevels[levelIndex].SetActive(true);
-            backButton.transform.localScale = Vector3.zero;
-            backButton.transform.DOScale(Vector3.one, .12f).SetEase(Ease.OutBack);
 
-            for (int j = 0; j < levelStartButton.Length; j++)
-            {
-                levelStartButton[j].transform.localScale = Vector3.one;
-                ;
-            }
-        }
-    }
 
-    public void StartCurrentLevel(int levelIndex)
-    {
-        if (levelIndex == 0)
-        {
-            levelStartButton[0].transform.localScale = Vector3.zero;
-            levelStartButton[0].transform.DOScale(Vector3.one, .12f).SetEase(Ease.OutBack);
-            Invoke(nameof(LevelOneActivities), .2f);
-        }
-
-        if (levelIndex == 1)
-        {
-            levelStartButton[1].transform.localScale = Vector3.zero;
-            levelStartButton[1].transform.DOScale(Vector3.one, .12f).SetEase(Ease.OutBack);
-            Invoke(nameof(LevelTwoActivities), .2f);
-        }
-       
-    }
-
-    void LevelOneActivities()
-    {
-        levelStartButton[0].transform.localScale = Vector3.zero;
-        levelStartButton[0].transform.parent.gameObject.SetActive(false);
-    }
-    void LevelTwoActivities()
-    {
-        levelStartButton[1].transform.localScale = Vector3.zero;
-        levelStartButton[1].transform.parent.gameObject.SetActive(false);
-    }
     
     
 }
