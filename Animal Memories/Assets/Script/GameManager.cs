@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,9 +12,22 @@ public class GameManager : MonoBehaviour
     public bool IsLocked { get; set; }
 
     public bool clueflipDone;
+    
+    public bool level1;
+    public bool level2;
+    public bool level3;
+    public bool level4;
+    public bool level5;
 
+   public List<bool> whichLevelIsThis = new List<bool>();
+    
     private void Awake()
     {
+        whichLevelIsThis.Add(level1);
+        whichLevelIsThis.Add(level2);
+        whichLevelIsThis.Add(level3);
+        whichLevelIsThis.Add(level4);
+        whichLevelIsThis.Add(level5);
         instance = this;
     }
 
@@ -101,6 +115,31 @@ public class GameManager : MonoBehaviour
             {
                 return; // At least one is not matched yet
             }
+        }
+
+        if (level1)
+        {
+            Debug.Log("🎉 Level 1 Completed");
+        }
+
+        if (level2)
+        {
+            Debug.Log("🎉 Level 2 Completed");
+        }
+
+        if (level3)
+        {
+            Debug.Log("🎉 Level 3 Completed");
+        }
+
+        if (level4)
+        {
+            Debug.Log("🎉 Level 4 Completed");
+        }
+
+        if (level5)
+        {
+            Debug.Log("🎉 Level 5 Completed");
         }
 
         Debug.Log("🎉 All cards matched!");

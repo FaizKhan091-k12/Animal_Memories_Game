@@ -18,6 +18,9 @@ public class LevelGridGenerator : MonoBehaviour
     public bool isGridGenerated = false;
     public float delay;
     public GameObject buttonBlocker;
+
+ 
+    
     private void OnEnable()
     {
         GenerateGrid();

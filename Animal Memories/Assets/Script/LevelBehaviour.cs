@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -5,6 +6,9 @@ using DG.Tweening;
 
 public class LevelBehaviour : MonoBehaviour
 {
+    
+    public static LevelBehaviour instance;
+    
     public Button[] levelButtons;
     public Sprite lockedSprite;
     public Sprite unlockedSprite;
@@ -16,6 +20,11 @@ public class LevelBehaviour : MonoBehaviour
     public GameObject backButton;
 
     public GameObject[] InGameWindows;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -55,7 +64,7 @@ public class LevelBehaviour : MonoBehaviour
         UpdateButtons();
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
+    
     void UpdateButtons()
     {
         int unlockedUpTo = PlayerPrefs.GetInt("UnlockedLevel", 1);
@@ -99,7 +108,7 @@ public class LevelBehaviour : MonoBehaviour
         }
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
+    
     IEnumerator FadeOutLockAndEnableButton(int index)
     {
         Button button = levelButtons[index];
@@ -165,12 +174,16 @@ public class LevelBehaviour : MonoBehaviour
 
     public void StartCurrentLevel(int levelIndex)
     {
-        
         if (levelIndex == 0)
         {
             levelStartButton[levelIndex].transform.localScale = Vector3.zero;
             levelStartButton[levelIndex].transform.DOScale(Vector3.one, .12f).SetEase(Ease.OutBack);
             Invoke(nameof(LevelOneActivities), .2f);
+            for (int i = 0; i < GameManager.instance.whichLevelIsThis.Count; i++)
+            {
+                GameManager.instance.whichLevelIsThis[i] = false;
+            }
+            GameManager.instance.level1 = true;
         }
 
         if (levelIndex == 1)
@@ -178,6 +191,12 @@ public class LevelBehaviour : MonoBehaviour
             levelStartButton[levelIndex].transform.localScale = Vector3.zero;
             levelStartButton[levelIndex].transform.DOScale(Vector3.one, .12f).SetEase(Ease.OutBack);
             Invoke(nameof(LevelTwoActivities), .2f);
+            for (int i = 0; i < GameManager.instance.whichLevelIsThis.Count; i++)
+            {
+                GameManager.instance.whichLevelIsThis[i] = false;
+            }
+            GameManager.instance.level2 = true;
+           
         }
        
     }

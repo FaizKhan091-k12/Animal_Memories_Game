@@ -4413,6 +4413,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clueTime: 2
   clueflipDone: 0
+  level1: 0
+  level2: 0
+  level3: 0
+  level4: 0
+  level5: 0
 --- !u!4 &1091893528
 Transform:
   m_ObjectHideFlags: 0
