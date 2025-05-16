@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
         if (level1)
         {
             Debug.Log("🎉 Level 1 Completed");
+            LevelBehaviour.instance.UnlockNextLevel(1);
         }
 
         if (level2)
