@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance;
+    
     [Header("Panel")]
     public GameObject mainMenuPanel;
     public GameObject levelSelectPanel;
@@ -32,6 +34,12 @@ public class UIManager : MonoBehaviour
 
     public float left;
     public float right;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
 
@@ -59,7 +67,7 @@ public class UIManager : MonoBehaviour
 
 
 
-    void PlayButtonClick()
+    public void PlayButtonClick() 
     {
         playButton.transform.localScale = Vector3.zero;
         playButton.transform.DOScale(new Vector3(1,1,1),0.2f).SetEase(Ease.OutBack);
